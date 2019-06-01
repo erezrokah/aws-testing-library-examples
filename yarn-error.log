@@ -1,0 +1,73 @@
+Arguments: 
+  /home/erez/.nvm/versions/node/v8.15.0/bin/node /usr/share/yarn/bin/yarn.js install
+
+PATH: 
+  /home/erez/.nvm/versions/node/v8.15.0/bin:/usr/lib/jvm/default-java/bin:/home/linuxbrew/.linuxbrew/bin:/home/erez/.sdkman/candidates/gradle/current/bin:/usr/local/google-cloud-sdk/bin:/home/erez/bin:/home/erez/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin::/home/erez/Android/Sdk/tools:/home/erez/Android/Sdk/platform-tools:/home/erez/Documents/github/rmrs/depot_tools
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  8.15.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/erez/Documents/github/side_projects/serverless/aws-testing-library-examples/package.json: Unexpected token } in JSON at position 478
+      at JSON.parse (<anonymous>)
+      at /usr/share/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/share/yarn/lib/cli.js:304:30)
+      at /usr/share/yarn/lib/cli.js:315:13
+      at <anonymous>
+
+npm manifest: 
+  {
+    "name": "aws-testing-library-examples",
+    "version": "1.0.0",
+    "description": "Usage examples for aws-testing-library",
+    "main": "src/index.js",
+    "scripts": {
+      "lint": "tslint 'src/**/*.ts'",
+      "test": "jest",
+      "test:ci": "JEST_JUNIT_OUTPUT=./reports/junit/${npm_package_name}-test-results.xml jest --runInBand --ci",
+      "coverage": "jest --coverage",
+      "prettier": "prettier --write src/**/*.ts",
+      "prettier:ci": "prettier --list-different src/**/*.ts",
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/erezrokah/aws-testing-library-examples.git"
+    },
+    "author": "Erez Rokah",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/erezrokah/aws-testing-library-examples/issues"
+    },
+    "devDependencies": {
+      "@types/chai": "^4.1.7",
+      "@types/jest": "^23.3.2",
+      "@types/node": "^10.11.1",
+      "chai": "^4.2.0",
+      "jest": "^23.6.0",
+      "jest-junit": "^5.1.0",
+      "prettier": "^1.14.3",
+      "ts-jest": "^23.10.1",
+      "ts-node": "^7.0.1",
+      "tslint": "^5.11.0",
+      "tslint-config-prettier": "^1.15.0",
+      "typescript": "^3.0.3"
+    },
+    "homepage": "https://github.com/erezrokah/aws-testing-library-examples#readme",
+    "private": true,  
+    "engines": {
+      "node": ">=8.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

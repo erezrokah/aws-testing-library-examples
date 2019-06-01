@@ -1,0 +1,102 @@
+service: aws-testing-library-examples
+
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-webpack
+  - '@anttiviljami/serverless-stack-output'
+  - serverless-plugin-tracing
+  - serverless-iam-roles-per-function
+  # - serverless-step-functions
+  - serverless-s3-remover
+
+custom:
+  defaultStage: dev
+  defaultRegion: us-east-1
+  currentStage: ${opt:stage, self:custom.defaultStage}
+  currentRegion: ${opt:region, self:custom.defaultRegion}
+
+  dynamoDbTable: ${self:service}-dynamoDb-${self:custom.currentStage}
+  kinesisStream: ${self:service}-stream-${self:custom.currentStage}
+  s3Bucket: ${self:service}-bucket-${self:custom.currentStage}
+
+  output:
+    handler: ./scripts/stackOutput.handler
+
+  webpack:
+    includeModules: true
+    packager: yarn
+
+  remover:
+    buckets:
+      - ${self:custom.s3Bucket}
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${self:custom.currentStage}
+  region: ${self:custom.currentRegion}
+
+  memorySize: 256
+  logRetentionInDays: 7
+
+  tracing: true # enable tracing
+  iamRoleStatements:
+    - Effect: 'Allow' # xray permissions (required)
+      Action:
+        - 'xray:PutTraceSegments'
+        - 'xray:PutTelemetryRecords'
+      Resource:
+        - '*'
+
+functions:
+  create:
+    handler: src/dynamoDb.create
+    environment:
+      DYNAMODB_TABLE: ${self:custom.dynamoDbTable}
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+        Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.dynamoDbTable}'
+
+  queue:
+    handler: src/kinesis.queue
+    environment:
+      STREAM: ${self:custom.kinesisStream}
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - kinesis:PutRecord
+        Resource: 'arn:aws:kinesis:#{AWS::Region}:#{AWS::AccountId}:stream/${self:custom.kinesisStream}'
+
+  save:
+    handler: src/s3.save
+    environment:
+      BUCKET: ${self:custom.s3Bucket}
+    iamRoleStatementsInherit: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: 'arn:aws:s3:::${self:custom.s3Bucket}/*'
+
+  endpoint:
+    handler: src/api.endpoint
+
+  log:
+    handler: src/cloudwatch.log
+
+resources:
+  - ${file(resources/kinesis.yml)}
+  - ${file(resources/dynamoDb.yml)}
+  - ${file(resources/s3.yml)}
