@@ -13,3 +13,5 @@ junit.xml
 
 .serverless
 .webpack
+
+yarn-error.log
