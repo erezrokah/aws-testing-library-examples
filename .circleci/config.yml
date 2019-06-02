@@ -9,6 +9,16 @@ aliases:
 
   - &checkout checkout
 
+  - &build_only_filters
+    filters:
+      branches:
+        ignore: /master/
+
+  - &build_deploy_test_filters
+    filters:
+      branches:
+        only: master
+
   - &save_cache
     save_cache:
       paths:
@@ -22,10 +32,10 @@ aliases:
         # fallback to using the latest cache if no exact match is found
         - dependencies-cache
 
-  - &install_serverless
+  - &install_serverless_cli
     run:
       name: Install Serverless Framework
-      command: npm install -g serverless
+      command: sudo npm i -g serverless
 
   - &install_dependencies
     run:
@@ -63,11 +73,34 @@ jobs:
     steps:
       - *checkout
       - *restore_cache
-      - *install_serverless
       - *install_dependencies
       - *save_cache
       - *run_linter
       - *run_prettier
+
+  deploy-test:
+    <<: *container_config
+
+    steps:
+      - *checkout
+      - *restore_cache
+      - *install_serverless_cli
       - *run_deploy
       - *run_tests
       - *store_test_results
+
+workflows:
+  version: 2
+  build-only:
+    jobs:
+      - build:
+          <<: *build_only_filters
+
+  build-deploy-test:
+    jobs:
+      - build:
+          <<: *build_deploy_test_filters
+      - deploy-test:
+          requires:
+            - build
+          <<: *build_deploy_test_filters
