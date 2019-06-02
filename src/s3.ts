@@ -18,13 +18,21 @@ export const save: Handler = async (
   const fetchResponse = await fetch(fileUrl);
   if (fetchResponse.ok) {
     const buffer = await fetchResponse.buffer();
-    return await s3
+    await s3
       .putObject({
         Body: buffer,
         Bucket,
         Key: key,
       })
       .promise();
+    const response = {
+      body: JSON.stringify({
+        input: event.body,
+        message: 'File saved',
+      }),
+      statusCode: 200,
+    };
+    return response;
   } else {
     throw new Error('Fetch failed. Url: ' + fileUrl);
   }

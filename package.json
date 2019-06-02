@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "tslint 'src/**/*.ts'",
-    "test": "jest",
+    "test": "jest --maxWorkers=1",
     "test:ci": "JEST_JUNIT_OUTPUT=./reports/junit/${npm_package_name}-test-results.xml jest --runInBand --ci",
     "prettier": "prettier --write scripts/**/*.js src/**/*.ts",
     "prettier:ci": "prettier --list-different scripts/**/*.js src/**/*.ts",
