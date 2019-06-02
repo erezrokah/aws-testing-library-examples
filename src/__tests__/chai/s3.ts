@@ -24,7 +24,7 @@ describe('s3', () => {
       await clearAllObjects(region, bucket);
     });
 
-    test('should create db entry on lambda invoke', async () => {
+    test('should create object in s3 on lambda invoke', async () => {
       const body = {
         file_url:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/240px-Google_2015_logo.svg.png',

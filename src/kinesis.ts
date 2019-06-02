@@ -25,5 +25,13 @@ export const queue: Handler = async (
     StreamName,
   };
   const kinesis = new Kinesis();
-  return await kinesis.putRecord(params).promise();
+  await kinesis.putRecord(params).promise();
+  const response = {
+    body: JSON.stringify({
+      data: { message: 'Record saved', id: record.id },
+      input: event.body,
+    }),
+    statusCode: 200,
+  };
+  return response;
 };
