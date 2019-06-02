@@ -13,6 +13,8 @@ const { create } = functions;
 chai.use(awsTesting);
 const { expect } = chai;
 
+jest.setTimeout(60000);
+
 describe('dynamoDb', () => {
   describe('chai', () => {
     beforeEach(async () => {
@@ -24,7 +26,7 @@ describe('dynamoDb', () => {
     });
 
     test('should create db entry on lambda invoke', async () => {
-      const body = { text: 'from e2e test' };
+      const body = { text: 'text from test' };
       const result = await invoke(region, create, {
         body: JSON.stringify(body),
       });

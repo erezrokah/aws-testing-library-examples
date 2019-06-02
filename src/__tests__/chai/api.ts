@@ -9,6 +9,8 @@ const { ServiceEndpoint } = readJsonSync(
 
 const url = `${ServiceEndpoint}/api/public`;
 
+jest.setTimeout(60000);
+
 describe('api', () => {
   describe('chai', () => {
     chai.use(awsTesting);

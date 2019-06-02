@@ -12,6 +12,8 @@ const { queue } = functions;
 chai.use(awsTesting);
 const { expect } = chai;
 
+jest.setTimeout(60000);
+
 describe('kinesis', () => {
   describe('chai', () => {
     test('should put record in stream on lambda invoke', async () => {

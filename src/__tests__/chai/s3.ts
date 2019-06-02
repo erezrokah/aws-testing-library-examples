@@ -14,6 +14,8 @@ const { save } = functions;
 chai.use(awsTesting);
 const { expect } = chai;
 
+jest.setTimeout(60000);
+
 describe('s3', () => {
   describe('chai', () => {
     beforeEach(async () => {

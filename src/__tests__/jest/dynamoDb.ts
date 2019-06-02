@@ -20,7 +20,7 @@ describe('dynamoDb', () => {
     });
 
     test('should create db entry on lambda invoke', async () => {
-      const body = { text: 'from e2e test' };
+      const body = { text: 'text from test' };
       const result = await invoke(region, create, {
         body: JSON.stringify(body),
       });
