@@ -4,7 +4,12 @@ const fs = require('fs-extra');
 const handler = async (data, serverless, _) => {
   const region = serverless.variables.service.custom.currentRegion;
   const stage = serverless.variables.service.custom.currentStage;
-  const { S3BucketName, KinesisStreamName, DynamoDbTableName } = data;
+  const {
+    S3BucketName,
+    KinesisStreamName,
+    DynamoDbTableName,
+    ServiceEndpoint,
+  } = data;
 
   const allFunctions = serverless.variables.service.functions;
   const functions = {};
@@ -18,6 +23,7 @@ const handler = async (data, serverless, _) => {
       S3BucketName,
       KinesisStreamName,
       DynamoDbTableName,
+      ServiceEndpoint,
       region,
       functions,
     },

@@ -92,6 +92,11 @@ functions:
 
   endpoint:
     handler: src/api.endpoint
+    events:
+      - http:
+          path: api/public
+          method: post
+          cors: true
 
   log:
     handler: src/cloudwatch.log

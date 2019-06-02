@@ -7,7 +7,6 @@
     "lint": "tslint 'src/**/*.ts'",
     "test": "jest",
     "test:ci": "JEST_JUNIT_OUTPUT=./reports/junit/${npm_package_name}-test-results.xml jest --runInBand --ci",
-    "coverage": "jest --coverage",
     "prettier": "prettier --write scripts/**/*.js src/**/*.ts",
     "prettier:ci": "prettier --list-different scripts/**/*.js src/**/*.ts",
     "deploy": "serverless deploy --stage dev",
