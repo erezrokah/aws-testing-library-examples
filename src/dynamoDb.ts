@@ -24,5 +24,10 @@ export const create: Handler = async (
   };
 
   const dynamoDb = new DynamoDB.DocumentClient();
-  return await dynamoDb.put(params).promise();
+  await dynamoDb.put(params).promise();
+  const response = {
+    body: JSON.stringify(params.Item),
+    statusCode: 200,
+  };
+  return response;
 };

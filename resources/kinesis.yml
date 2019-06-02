@@ -4,3 +4,8 @@ Resources:
     Properties:
       Name: ${self:custom.kinesisStream}
       ShardCount: 1
+
+Outputs:
+  KinesisStreamName:
+    Value:
+      Ref: KinesisStream

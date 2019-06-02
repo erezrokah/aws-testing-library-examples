@@ -4,3 +4,8 @@ Resources:
     Properties:
       BucketName: ${self:custom.s3Bucket}
       AccessControl: Private
+
+Outputs:
+  S3BucketName:
+    Value:
+      Ref: S3Bucket

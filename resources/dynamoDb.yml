@@ -12,3 +12,8 @@ Resources:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
       TableName: ${self:custom.dynamoDbTable}
+
+Outputs:
+  DynamoDbTableName:
+    Value:
+      Ref: DynamoDbTable
