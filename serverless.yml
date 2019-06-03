@@ -6,7 +6,7 @@ plugins:
   - '@anttiviljami/serverless-stack-output'
   - serverless-plugin-tracing
   - serverless-iam-roles-per-function
-  # - serverless-step-functions
+  - serverless-step-functions
   - serverless-s3-remover
 
 custom:
@@ -18,6 +18,8 @@ custom:
   dynamoDbTable: ${self:service}-dynamoDb-${self:custom.currentStage}
   kinesisStream: ${self:service}-stream-${self:custom.currentStage}
   s3Bucket: ${self:service}-bucket-${self:custom.currentStage}
+  stepFunction: step-function-${self:service}-${self:custom.currentStage}
+  stepFunctionId: StepFunction
 
   output:
     handler: ./scripts/stackOutput.handler
@@ -101,7 +103,33 @@ functions:
   log:
     handler: src/cloudwatch.log
 
+stepFunctions:
+  stateMachines:
+    DoNothingStepFunction:
+      id: ${self:custom.stepFunctionId}
+      name: ${self:custom.stepFunction}
+      definition:
+        Comment: 'A step function to move between different states and do nothing'
+        StartAt: State1
+        States:
+          State1:
+            Type: Pass
+            Next: State2
+          State2:
+            Type: Pass
+            Next: State3
+          State3:
+            Type: Pass
+            Next: State4
+          State4:
+            Type: Pass
+            Next: State5
+          State5:
+            Type: Pass
+            End: true
+
 resources:
   - ${file(resources/kinesis.yml)}
   - ${file(resources/dynamoDb.yml)}
   - ${file(resources/s3.yml)}
+  - ${file(resources/stepFunction.yml)}

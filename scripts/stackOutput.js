@@ -9,6 +9,7 @@ const handler = async (data, serverless, _) => {
     KinesisStreamName,
     DynamoDbTableName,
     ServiceEndpoint,
+    StepFunctionArn,
   } = data;
 
   const allFunctions = serverless.variables.service.functions;
@@ -24,6 +25,7 @@ const handler = async (data, serverless, _) => {
       KinesisStreamName,
       DynamoDbTableName,
       ServiceEndpoint,
+      StepFunctionArn,
       region,
       functions,
     },

@@ -1,0 +1,4 @@
+Outputs:
+  StepFunctionArn:
+    Value:
+      Ref: ${self:custom.stepFunctionId}
