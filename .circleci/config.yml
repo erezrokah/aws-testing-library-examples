@@ -62,6 +62,11 @@ aliases:
       name: Run Tests
       command: yarn test:ci
 
+  - &run_remove
+    run:
+      name: Cleanup deployment
+      command: yarn run remove
+
   - &store_test_results
     store_test_results:
       path: reports/junit
@@ -87,6 +92,7 @@ jobs:
       - *install_serverless_cli
       - *run_deploy
       - *run_tests
+      - *run_remove
       - *store_test_results
 
 workflows:

@@ -44,3 +44,9 @@ yarn deploy
 ```bash
 yarn test
 ```
+
+## Cleanup
+
+```bash
+yarn run remove
+```
