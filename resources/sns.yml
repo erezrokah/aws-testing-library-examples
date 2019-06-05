@@ -1,0 +1,11 @@
+Resources:
+  NotificationsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: 'Notifications Topic'
+      TopicName: ${self:custom.notificationsTopicName}
+
+Outputs:
+  NotificationsTopicArn:
+    Value:
+      Ref: NotificationsTopic

@@ -20,6 +20,7 @@ custom:
   s3Bucket: ${self:service}-bucket-${self:custom.currentStage}
   stepFunction: step-function-${self:service}-${self:custom.currentStage}
   stepFunctionId: StepFunction
+  notificationsTopicName: ${self:service}-topic-${self:custom.currentStage}
 
   output:
     handler: ./scripts/stackOutput.handler
@@ -133,3 +134,4 @@ resources:
   - ${file(resources/dynamoDb.yml)}
   - ${file(resources/s3.yml)}
   - ${file(resources/stepFunction.yml)}
+  - ${file(resources/sns.yml)}
