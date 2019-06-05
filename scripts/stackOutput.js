@@ -10,6 +10,7 @@ const handler = async (data, serverless, _) => {
     DynamoDbTableName,
     ServiceEndpoint,
     StepFunctionArn,
+    NotificationsTopicArn,
   } = data;
 
   const allFunctions = serverless.variables.service.functions;
@@ -26,6 +27,7 @@ const handler = async (data, serverless, _) => {
       DynamoDbTableName,
       ServiceEndpoint,
       StepFunctionArn,
+      NotificationsTopicArn,
       region,
       functions,
     },
