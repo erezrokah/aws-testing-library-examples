@@ -990,10 +990,10 @@ aws-sign2@~0.7.0:
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
   integrity sha1-tG6JCTSpWR8tL2+G1+ap8bP+dqg=
 
-aws-testing-library@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/aws-testing-library/-/aws-testing-library-1.0.1.tgz#00d41884d6d1dbf8dbd49a232cb61b65ad387706"
-  integrity sha512-sKYyGvYoZ7EZCoFtht2Nm6sN8nCulKg2b/DvlVAb0an4BX6tmEBlXT/BgIz13NDJNK0JrhCO697jxvXLR+yZGw==
+aws-testing-library@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/aws-testing-library/-/aws-testing-library-1.0.2.tgz#c0fbd9be62fbeb5beb0176f5142d79e2bbf11447"
+  integrity sha512-hzcgCcT8L3y8hcG+MxTs9R590JdNTD2dlv8FpsC5LWk8na8Yd3t4dLCrQzZOdHjGWzwWapMOXNpAAwBtbiSI6w==
   dependencies:
     aws-sdk "^2.323.0"
     axios "^0.18.1"
