@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "tslint 'src/**/*.ts'",
     "test": "jest --maxWorkers=1",
-    "test:ci": "JEST_JUNIT_OUTPUT=./reports/junit/${npm_package_name}-test-results.xml jest --runInBand --ci",
+    "test:ci": "JEST_JUNIT_OUTPUT_DIR=./reports/junit JEST_JUNIT_OUTPUT_NAME=${npm_package_name}-test-results.xml jest --runInBand --ci",
     "prettier": "prettier --write scripts/**/*.js src/**/*.ts",
     "prettier:ci": "prettier --list-different scripts/**/*.js src/**/*.ts",
     "deploy": "serverless deploy --stage dev",
@@ -23,34 +23,34 @@
   },
   "devDependencies": {
     "@anttiviljami/serverless-stack-output": "^0.3.1",
-    "@types/aws-lambda": "^8.10.26",
-    "@types/chai": "^4.1.7",
-    "@types/fs-extra": "^7.0.0",
-    "@types/jest": "^24.0.13",
-    "@types/node": "^12.0.4",
-    "@types/node-fetch": "^2.3.4",
+    "@types/aws-lambda": "^8.10.31",
+    "@types/chai": "^4.2.0",
+    "@types/fs-extra": "^8.0.0",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
+    "@types/node-fetch": "^2.5.0",
     "@types/uuid": "^3.4.4",
-    "aws-testing-library": "^1.0.8",
+    "aws-testing-library": "^1.0.9",
     "axios": "^0.19.0",
     "chai": "^4.2.0",
     "fs-extra": "^8.0.1",
-    "jest": "^24.8.0",
-    "jest-junit": "^6.4.0",
+    "jest": "^24.9.0",
+    "jest-junit": "^8.0.0",
     "prettier": "^1.17.1",
     "serverless-iam-roles-per-function": "^2.0.1",
     "serverless-plugin-tracing": "^2.0.0",
     "serverless-pseudo-parameters": "^2.4.0",
     "serverless-s3-remover": "^0.6.0",
-    "serverless-step-functions": "^1.21.1",
+    "serverless-step-functions": "^2.6.0",
     "serverless-webpack": "^5.3.0",
     "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.2",
     "ts-node": "^8.2.0",
-    "tslint": "^5.17.0",
+    "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.1",
-    "webpack": "^4.32.2",
-    "yargs": "^13.2.4"
+    "typescript": "^3.6.2",
+    "webpack": "^4.39.3",
+    "yargs": "^14.0.0"
   },
   "homepage": "https://github.com/erezrokah/aws-testing-library-examples#readme",
   "private": true,
@@ -58,8 +58,8 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.466.0",
+    "aws-sdk": "^2.519.0",
     "node-fetch": "^2.6.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.3"
   }
 }
