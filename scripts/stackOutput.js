@@ -15,7 +15,7 @@ const handler = async (data, serverless, _) => {
 
   const allFunctions = serverless.variables.service.functions;
   const functions = {};
-  Object.keys(allFunctions).forEach(f => {
+  Object.keys(allFunctions).forEach((f) => {
     functions[f] = allFunctions[f].name;
   });
 
