@@ -36,7 +36,7 @@
     "fs-extra": "^8.0.1",
     "jest": "^25.0.0",
     "jest-junit": "^10.0.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.0",
     "serverless-iam-roles-per-function": "^2.0.2",
     "serverless-plugin-tracing": "^2.0.0",
     "serverless-pseudo-parameters": "^2.5.0",
