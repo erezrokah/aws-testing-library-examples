@@ -991,9 +991,9 @@ array-unique@^0.3.2:
   integrity sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=
 
 asl-validator@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/asl-validator/-/asl-validator-1.8.0.tgz#b4cfd42354a51ee7688260525deb4d5513ca806c"
-  integrity sha512-9pVM4YAjivu4WZNOQ0pey46DJYja90BJzN3hxINUXdwZLF/7hhpvcHllWzDYuQ1SdMSyUsNRiyoIuPRNL9RR+w==
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/asl-validator/-/asl-validator-1.9.0.tgz#28a9c63fd8d720867c33c831299be585b9794526"
+  integrity sha512-DubKe/xs3W3IDV3uPVxj/YkMmqSgc+8zX5F0VaNsBSZnVcj5IPbYTZtyjSEtNW+5WmfBjpVzhRPswI6bpzsXQA==
   dependencies:
     ajv "^6.12.2"
     commander "^5.1.0"
@@ -4741,9 +4741,9 @@ serverless-s3-remover@^0.6.0:
     prompt "^1.0.0"
 
 serverless-step-functions@^2.15.0:
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/serverless-step-functions/-/serverless-step-functions-2.26.0.tgz#3abf3d3958c22d0d96d852d28d3c2441a2451d86"
-  integrity sha512-5fhneuUuevie9F6dHB9aFQ8zcC5sTtD0nFFmUVpqUR9cm+tI/IItda1Yhk1T5LMK8d/WdVi0SQ65gzvoEQecqQ==
+  version "2.27.1"
+  resolved "https://registry.yarnpkg.com/serverless-step-functions/-/serverless-step-functions-2.27.1.tgz#228625a4dc85a3a396252586f7501d6d33c649fe"
+  integrity sha512-zdj/t6aly03i4pI7irBWsXj0f4Rju088yWRXIDTx/pKIk7ouw/YmsYZU5Dmplnd1zLdRTDJUlueuzz8XlLJyvA==
   dependencies:
     "@hapi/joi" "^15.0.2"
     asl-validator "^1.8.0"
