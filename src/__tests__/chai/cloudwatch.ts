@@ -1,13 +1,15 @@
 import awsTesting from 'aws-testing-library/lib/chai';
 import { invoke } from 'aws-testing-library/lib/utils/lambda';
 import chai = require('chai');
-import { readJsonSync } from 'fs-extra';
 import path = require('path');
 import { v1 as uuid } from 'uuid';
 
-const { region, functions } = readJsonSync(
-  path.join(__dirname, '..', 'config.json'),
-);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { region, functions } = require(path.join(
+  __dirname,
+  '..',
+  'config.json',
+));
 const { log } = functions;
 
 chai.use(awsTesting);

@@ -1,14 +1,10 @@
-import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda';
+import { APIGatewayEvent, Handler } from 'aws-lambda';
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import { v1 as uuid } from 'uuid';
 
 const TableName = process.env.DYNAMODB_TABLE || '';
 
-export const create: Handler = async (
-  event: APIGatewayEvent,
-  context: Context,
-  callback?: Callback,
-) => {
+export const create: Handler = async (event: APIGatewayEvent) => {
   const parsed = JSON.parse(event.body || '');
   const text = parsed.text;
 

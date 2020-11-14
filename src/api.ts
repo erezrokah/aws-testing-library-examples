@@ -1,11 +1,7 @@
-import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda';
+import { Handler } from 'aws-lambda';
 
-export const endpoint: Handler = (
-  event: APIGatewayEvent,
-  context: Context,
-  callback: Callback,
-) => {
-  callback(null, {
+export const endpoint: Handler = async () => {
+  return {
     body: JSON.stringify({
       message: 'Hi ⊂◉‿◉つ from API',
     }),
@@ -16,5 +12,5 @@ export const endpoint: Handler = (
       'Access-Control-Allow-Origin': '*',
     },
     statusCode: 200,
-  });
+  };
 };

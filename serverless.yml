@@ -27,7 +27,7 @@ custom:
 
   webpack:
     includeModules: true
-    packager: yarn
+    packager: npm
 
   remover:
     buckets:

@@ -1,11 +1,9 @@
 import awsTesting from 'aws-testing-library/lib/chai';
 import chai = require('chai');
-import { readJsonSync } from 'fs-extra';
 import path = require('path');
 
-const { ServiceEndpoint } = readJsonSync(
-  path.join(__dirname, '..', 'config.json'),
-);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { ServiceEndpoint } = require(path.join(__dirname, '..', 'config.json'));
 
 const url = `${ServiceEndpoint}/api/public`;
 

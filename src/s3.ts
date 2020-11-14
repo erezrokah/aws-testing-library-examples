@@ -1,14 +1,10 @@
-import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda';
+import { APIGatewayEvent, Handler } from 'aws-lambda';
 import * as S3 from 'aws-sdk/clients/s3';
 import fetch from 'node-fetch';
 
 const Bucket = process.env.BUCKET || '';
 
-export const save: Handler = async (
-  event: APIGatewayEvent,
-  context: Context,
-  callback?: Callback,
-) => {
+export const save: Handler = async (event: APIGatewayEvent) => {
   const parsed = JSON.parse(event.body || '');
   const fileUrl = parsed.file_url || '';
   const key = parsed.key || '';

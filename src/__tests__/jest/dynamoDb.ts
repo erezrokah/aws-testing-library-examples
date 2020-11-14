@@ -1,12 +1,13 @@
-import 'aws-testing-library/lib/jest';
 import { clearAllItems } from 'aws-testing-library/lib/utils/dynamoDb';
 import { invoke } from 'aws-testing-library/lib/utils/lambda';
-import { readJsonSync } from 'fs-extra';
 import path = require('path');
 
-const { DynamoDbTableName: table, region, functions } = readJsonSync(
-  path.join(__dirname, '..', 'config.json'),
-);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { DynamoDbTableName: table, region, functions } = require(path.join(
+  __dirname,
+  '..',
+  'config.json',
+));
 const { create } = functions;
 
 describe('dynamoDb', () => {

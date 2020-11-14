@@ -2,12 +2,14 @@ import * as StepFunctions from 'aws-sdk/clients/stepfunctions';
 import awsTesting from 'aws-testing-library/lib/chai';
 import { stopRunningExecutions } from 'aws-testing-library/lib/utils/stepFunctions';
 import chai = require('chai');
-import { readJsonSync } from 'fs-extra';
 import path = require('path');
 
-const { StepFunctionArn: stateMachineArn, region } = readJsonSync(
-  path.join(__dirname, '..', 'config.json'),
-);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { StepFunctionArn: stateMachineArn, region } = require(path.join(
+  __dirname,
+  '..',
+  'config.json',
+));
 
 chai.use(awsTesting);
 const { expect } = chai;

@@ -1,11 +1,12 @@
-import 'aws-testing-library/lib/jest';
 import { invoke } from 'aws-testing-library/lib/utils/lambda';
-import { readJsonSync } from 'fs-extra';
 import path = require('path');
 
-const { KinesisStreamName: stream, region, functions } = readJsonSync(
-  path.join(__dirname, '..', 'config.json'),
-);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { KinesisStreamName: stream, region, functions } = require(path.join(
+  __dirname,
+  '..',
+  'config.json',
+));
 const { queue } = functions;
 
 describe('kinesis', () => {
