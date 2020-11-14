@@ -1,13 +1,14 @@
-import 'aws-testing-library/lib/jest';
 import { invoke } from 'aws-testing-library/lib/utils/lambda';
 import { clearAllObjects } from 'aws-testing-library/lib/utils/s3';
-import { readJsonSync } from 'fs-extra';
 import fetch from 'node-fetch';
 import path = require('path');
 
-const { S3BucketName: bucket, region, functions } = readJsonSync(
-  path.join(__dirname, '..', 'config.json'),
-);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { S3BucketName: bucket, region, functions } = require(path.join(
+  __dirname,
+  '..',
+  'config.json',
+));
 const { save } = functions;
 
 describe('s3', () => {

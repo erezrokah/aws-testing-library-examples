@@ -1,17 +1,37 @@
-// https://circleci.com/account/api
+/* eslint-env node */
+/* eslint-disable @typescript-eslint/no-var-requires */
+const gitRemoteOriginUrl = require('git-remote-origin-url');
 const yargs = require('yargs');
-const axios = require('axios');
+const { Octokit } = require('@octokit/rest');
 const { IAM } = require('aws-sdk');
+const sodium = require('tweetsodium');
 
-log = console.log;
-error = console.error;
+const extractGithubData = async () => {
+  const url = await gitRemoteOriginUrl();
+  // https://github.com/USERNAME/REPOSITORY.git
+  // or
+  // git@github.com:USERNAME/REPOSITORY.git
+  // to USERNAME/REPOSITORY.git
+  const stripped = url.split('github.com')[1].substring(1);
 
-const api = 'https://circleci.com/api/v1.1/project/github';
+  // splits USERNAME/REPOSITORY.git
+  const parts = stripped.split('/');
+  const owner = parts[0];
+  const repo = parts[1].split('.')[0];
+
+  return {
+    owner,
+    repo,
+  };
+};
+
+const { log, error } = console;
+
 const policyArn = 'arn:aws:iam::aws:policy/AdministratorAccess';
 
-const getIamUserName = repo => `circle-ci-${repo}`;
+const getIamUserName = ({ owner, repo }) => `github-actions-${owner}-${repo}`;
 
-const deleteAllKeys = async userName => {
+const deleteAllKeys = async (userName) => {
   log(`Deleting all access keys for user ${userName}`);
   const iam = new IAM();
   const result = await iam.listAccessKeys({ UserName: userName }).promise();
@@ -24,7 +44,7 @@ const deleteAllKeys = async userName => {
   log(`Done deleting all access keys for user ${userName}`);
 };
 
-const createIamUser = async userName => {
+const createIamUser = async (userName) => {
   const iam = new IAM();
 
   try {
@@ -61,7 +81,7 @@ const createIamUser = async userName => {
   return { accessKeyId, secretAccessKey };
 };
 
-const deleteIamUser = async userName => {
+const deleteIamUser = async (userName) => {
   const iam = new IAM();
 
   try {
@@ -88,98 +108,77 @@ const deleteIamUser = async userName => {
   }
 };
 
-const follow = async (token, owner, repo) => {
-  log(`Following repo ${repo} under owner ${owner}`);
-  const result = await axios.post(
-    `${api}/${owner}/${repo}/follow?circle-token=${token}`,
-  );
-  const { following } = result.data;
-  if (following) {
-    log(`Successfully followed repo ${repo} under owner ${owner}`);
-  } else {
-    const message = `Failed to follow repo ${repo} under owner ${owner}`;
-    error(message);
-    throw new Error(message);
-  }
-};
+const setupGitHubSecrets = async ({ owner, repo, token, secrets }) => {
+  log('Setting up repo secrets');
 
-const setEnvs = async (token, owner, repo, envs) => {
-  log(`Deleting existing environment vars for project ${repo}`);
-  const { data: existing } = await axios.get(
-    `${api}/${owner}/${repo}/envvar?circle-token=${token}`,
-  );
+  const octokit = new Octokit({ auth: token });
+
+  const {
+    data: { key, key_id },
+  } = await octokit.actions.getRepoPublicKey({ owner, repo });
+
   await Promise.all(
-    existing.map(({ name }) =>
-      axios.delete(
-        `${api}/${owner}/${repo}/envvar/${name}?circle-token=${token}`,
-      ),
-    ),
-  );
-  log(`Done deleting existing environment vars for project ${repo}`);
+    secrets.map(async ({ name, value }) => {
+      const messageBytes = Buffer.from(value);
+      const keyBytes = Buffer.from(key, 'base64');
+      const encryptedBytes = sodium.seal(messageBytes, keyBytes);
+      const encrypted = Buffer.from(encryptedBytes).toString('base64');
 
-  log(`Setting environment vars for project ${repo}`);
+      await octokit.actions.createOrUpdateRepoSecret({
+        owner,
+        repo,
+        key_id,
+        secret_name: name,
+        encrypted_value: encrypted,
+      });
+    }),
+  );
+
+  log('Done setting up repo secrets');
+};
+
+const deleteGitHubSecrets = async ({ owner, repo, token, secrets }) => {
+  log('Removing up repo secrets');
+  const octokit = new Octokit({ auth: token });
   await Promise.all(
-    envs.map(({ name, value }) =>
-      axios.post(`${api}/${owner}/${repo}/envvar?circle-token=${token}`, {
-        name,
-        value,
-      }),
-    ),
+    secrets.map(async ({ name }) => {
+      await octokit.actions.deleteRepoSecret({
+        owner,
+        repo,
+        secret_name: name,
+      });
+    }),
   );
-  log(`Successfully set environment vars for project ${repo}`);
+
+  log('Done removing up repo secrets');
 };
 
-const updateProjectSettings = async (token, owner, repo) => {
-  log(`Updating settings for project ${repo}`);
-  await axios.put(`${api}/${owner}/${repo}/settings?circle-token=${token}`, {
-    feature_flags: {
-      'build-prs-only': false,
-      'build-fork-prs': true,
-      'forks-receive-secret-env-vars': false,
-    },
-  });
-  log(`Done updating settings for project ${repo}`);
-};
-
-const setup = async token => {
+const setup = async ({ token }) => {
   try {
-    const { owner, repo } = require('./githubConfig')();
-    const iamUser = getIamUserName(repo);
+    const { owner, repo } = await extractGithubData();
+    const iamUser = getIamUserName({ owner, repo });
     const { accessKeyId, secretAccessKey } = await createIamUser(iamUser);
 
-    await follow(token, owner, repo);
-    await setEnvs(token, owner, repo, [
+    const secrets = [
       { name: 'AWS_ACCESS_KEY_ID', value: accessKeyId },
       { name: 'AWS_SECRET_ACCESS_KEY', value: secretAccessKey },
-    ]);
-    await updateProjectSettings(token, owner, repo);
+    ];
+    await setupGitHubSecrets({ owner, repo, token, secrets });
   } catch (e) {
     error(e);
     process.exit(1);
   }
 };
 
-const unfollow = async (token, owner, repo) => {
-  log(`Unfollowing repo ${repo} under owner ${owner}`);
-  const result = await axios.post(
-    `${api}/${owner}/${repo}/unfollow?circle-token=${token}`,
-  );
-  const { following } = result.data;
-  if (!following) {
-    log(`Successfully unfollowed repo ${repo} under owner ${owner}`);
-  } else {
-    const message = `Failed to unfollow repo ${repo} under owner ${owner}`;
-    error(message);
-    throw new Error(message);
-  }
-};
-
-const remove = async token => {
+const remove = async ({ token }) => {
   try {
-    const { owner, repo } = require('./githubConfig')();
-    await unfollow(token, owner, repo);
-
-    const iamUser = getIamUserName(repo);
+    const { owner, repo } = extractGithubData();
+    const iamUser = getIamUserName({ owner, repo });
+    const secrets = [
+      { name: 'AWS_ACCESS_KEY_ID' },
+      { name: 'AWS_SECRET_ACCESS_KEY' },
+    ];
+    await deleteGitHubSecrets({ owner, repo, token, secrets });
     await deleteIamUser(iamUser);
   } catch (e) {
     error(e);
@@ -191,8 +190,8 @@ yargs
   .command({
     command: 'setup',
     aliases: ['s'],
-    desc: 'Setup circle ci project',
-    builder: yargs =>
+    desc: 'Setup GitHub Action',
+    builder: (yargs) =>
       yargs.option('token', {
         alias: 't',
         describe: 'Api Token',
@@ -201,14 +200,14 @@ yargs
         requiresArg: true,
       }),
     handler: async ({ token }) => {
-      await setup(token);
+      await setup({ token });
     },
   })
   .command({
     command: 'remove',
     aliases: ['r'],
-    desc: 'Remove circle ci project setup',
-    builder: yargs =>
+    desc: 'Cleanup GitHub Action',
+    builder: (yargs) =>
       yargs.option('token', {
         alias: 't',
         describe: 'Api Token',
@@ -217,7 +216,7 @@ yargs
         requiresArg: true,
       }),
     handler: async ({ token }) => {
-      await remove(token);
+      await remove({ token });
     },
   })
   .demandCommand(1)

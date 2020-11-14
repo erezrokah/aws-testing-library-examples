@@ -1,4 +1,4 @@
-import { APIGatewayEvent, Callback, Context, Handler } from 'aws-lambda';
+import { APIGatewayEvent, Handler } from 'aws-lambda';
 import * as Kinesis from 'aws-sdk/clients/kinesis';
 import { v1 as uuid } from 'uuid';
 
@@ -8,11 +8,7 @@ interface IRecord {
   message: string;
 }
 
-export const queue: Handler = async (
-  event: APIGatewayEvent,
-  context: Context,
-  callback?: Callback,
-) => {
+export const queue: Handler = async (event: APIGatewayEvent) => {
   const parsed = JSON.parse(event.body || '');
   const item = parsed.record as IRecord;
   const record = { message: item.message, id: uuid() };

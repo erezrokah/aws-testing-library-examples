@@ -1,15 +1,16 @@
 import * as SNS from 'aws-sdk/clients/sns';
-import 'aws-testing-library/lib/jest';
 import {
   subscribeToTopic,
   unsubscribeFromTopic,
 } from 'aws-testing-library/lib/utils/sqs';
-import { readJsonSync } from 'fs-extra';
 import path = require('path');
 
-const { NotificationsTopicArn: topicArn, region } = readJsonSync(
-  path.join(__dirname, '..', 'config.json'),
-);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { NotificationsTopicArn: topicArn, region } = require(path.join(
+  __dirname,
+  '..',
+  'config.json',
+));
 
 describe('sqs/sns', () => {
   describe('jest', () => {
