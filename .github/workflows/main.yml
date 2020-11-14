@@ -46,6 +46,7 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     strategy:
       matrix:
@@ -79,6 +80,9 @@ jobs:
 
       - name: Run e2e Tests
         run: npm test
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Cleanup Services
         run: npm run remove
