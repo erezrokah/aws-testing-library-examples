@@ -1,4 +1,4 @@
-name: AWS Testing Library CI
+name: AWS Testing Library Examples
 
 on:
   push:

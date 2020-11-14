@@ -1,7 +1,7 @@
 # AWS Testing Library Examples
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CircleCI](https://circleci.com/gh/erezrokah/aws-testing-library-examples.svg?style=svg)](https://circleci.com/gh/erezrokah/aws-testing-library-examples)
+[![Build](https://github.com/erezrokah/aws-testing-library-examples/workflows/AWS%20Testing%20Library%20Examples/badge.svg)](https://github.com/erezrokah/aws-testing-library-examples/actions)
 
 Examples on how to use [AWS Testing Library](https://github.com/erezrokah/aws-testing-library)
 
