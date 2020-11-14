@@ -7,9 +7,7 @@ Examples on how to use [AWS Testing Library](https://github.com/erezrokah/aws-te
 
 ## Prerequisites
 
-[Nodejs](https://nodejs.org/en/) (at least version 8)
-
-[Yarn](https://yarnpkg.com/lang/en/)
+[Nodejs](https://nodejs.org/en/) (at least version 14)
 
 Amazon AWS account and `awscli` installed and configured: <https://aws.amazon.com/getting-started/>
 
@@ -18,35 +16,35 @@ Serverless [CLI](https://serverless.com/framework/docs/getting-started/)
 ## Setup
 
 ```bash
-yarn install
+npm ci
 ```
 
 ## Run Linter
 
 ```bash
-yarn lint
+npm run lint
 ```
 
-## Run Prettier
+## Format Code
 
 ```bash
-yarn prettier
+npm run format
 ```
 
 ## Deploy
 
 ```bash
-yarn deploy
+npm run deploy
 ```
 
 ## Run Tests
 
 ```bash
-yarn test
+npm test
 ```
 
 ## Cleanup
 
 ```bash
-yarn run remove
+npm run remove
 ```
