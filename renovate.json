@@ -12,5 +12,11 @@
   "lockFileMaintenance": {
     "enabled": true
   },
+  "packageRules": [
+    {
+      "matchPackageNames": ["aws-testing-library"],
+      "schedule": null
+    }
+  ],
   "semanticCommits": true
 }
