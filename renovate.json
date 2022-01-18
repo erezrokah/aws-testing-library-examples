@@ -1,22 +1,9 @@
 {
-  "extends": [
-    "config:base",
-    "schedule:weekly"
-  ],
-  "rangeStrategy": "update-lockfile",
-  "automerge": true,
-  "labels": ["renovate"],
-  "major": {
-    "automerge": false
-  },
-  "lockFileMaintenance": {
-    "enabled": true
-  },
+  "extends": ["github>erezrokah/shared-configurations:renovate-default"],
   "packageRules": [
     {
       "matchPackageNames": ["aws-testing-library"],
       "schedule": null
     }
-  ],
-  "semanticCommits": true
+  ]
 }
