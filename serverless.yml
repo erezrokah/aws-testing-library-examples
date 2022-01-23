@@ -10,10 +10,8 @@ plugins:
   - serverless-s3-remover
 
 custom:
-  defaultStage: ${env:STAGE, 'dev')
-  defaultRegion: ${env:REGION, 'us-east-1')
-  currentStage: ${opt:stage, self:custom.defaultStage}
-  currentRegion: ${opt:region, self:custom.defaultRegion}
+  currentStage: ${opt:stage, env:STAGE, 'dev'}
+  currentRegion: ${opt:region, env:REGION, 'us-east-1'}
 
   dynamoDbTable: ${self:service}-dynamoDb-${self:custom.currentStage}
   kinesisStream: ${self:service}-stream-${self:custom.currentStage}
