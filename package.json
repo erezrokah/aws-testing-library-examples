@@ -10,8 +10,8 @@
     "format:ci": "prettier --list-different src/**/*.ts scripts/**/*.js",
     "deploy": "serverless deploy",
     "remove": "serverless remove",
-    "github:setup:secrets": "node scripts/github setup",
-    "github:remove:secrets": "node scripts/github remove"
+    "github:setup:secrets": "node scripts/github.mjs setup",
+    "github:remove:secrets": "node scripts/github.mjs remove"
   },
   "repository": {
     "type": "git",
