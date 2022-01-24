@@ -10,8 +10,8 @@
     "format:ci": "prettier --list-different src/**/*.ts scripts/**/*.js",
     "deploy": "serverless deploy",
     "remove": "serverless remove",
-    "github:setup:secrets": "node scripts/github setup",
-    "github:remove:secrets": "node scripts/github remove"
+    "github:setup:secrets": "node scripts/github.mjs setup",
+    "github:remove:secrets": "node scripts/github.mjs remove"
   },
   "repository": {
     "type": "git",
@@ -28,16 +28,16 @@
     "@types/aws-lambda": "^8.10.62",
     "@types/chai": "^4.2.12",
     "@types/jest": "^26.0.13",
-    "@types/node": "^14.6.4",
+    "@types/node": "^16.0.0",
     "@types/node-fetch": "^2.5.7",
     "@types/uuid": "^8.3.0",
-    "@typescript-eslint/eslint-plugin": "^4.7.0",
-    "@typescript-eslint/parser": "^4.7.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "aws-testing-library": "^1.0.9",
     "chai": "^4.2.0",
-    "eslint": "^7.13.0",
-    "eslint-config-prettier": "^6.15.0",
-    "git-remote-origin-url": "^3.1.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.0.0",
+    "git-remote-origin-url": "^4.0.0",
     "jest": "^26.0.1",
     "prettier": "^2.0.0",
     "serverless": "^2.72.1",
@@ -53,7 +53,7 @@
     "tweetsodium": "0.0.5",
     "typescript": "^4.0.5",
     "webpack": "^5.0.0",
-    "yargs": "^16.0.0"
+    "yargs": "^17.0.0"
   },
   "homepage": "https://github.com/erezrokah/aws-testing-library-examples#readme",
   "private": true,

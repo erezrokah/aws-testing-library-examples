@@ -1,10 +1,12 @@
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const gitRemoteOriginUrl = require('git-remote-origin-url');
-const yargs = require('yargs');
-const { Octokit } = require('@octokit/rest');
-const { IAM } = require('aws-sdk');
-const sodium = require('tweetsodium');
+import gitRemoteOriginUrl from 'git-remote-origin-url';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { Octokit } from '@octokit/rest';
+import aws from 'aws-sdk';
+import sodium from 'tweetsodium';
+
+const { IAM } = aws;
 
 const extractGithubData = async () => {
   const url = await gitRemoteOriginUrl();
@@ -170,7 +172,7 @@ const setup = async ({ token }) => {
 
 const remove = async ({ token }) => {
   try {
-    const { owner, repo } = extractGithubData();
+    const { owner, repo } = await extractGithubData();
     const iamUser = getIamUserName({ owner, repo });
     const secrets = [
       { name: 'AWS_ACCESS_KEY_ID' },
@@ -184,7 +186,7 @@ const remove = async ({ token }) => {
   }
 };
 
-yargs
+yargs(hideBin(process.argv))
   .command({
     command: 'setup',
     aliases: ['s'],
