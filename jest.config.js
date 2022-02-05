@@ -1,10 +1,10 @@
 /* eslint-env node */
+const esModules = ['aws-testing-library', 'filter-obj'].join('|');
+
 module.exports = {
   roots: ['<rootDir>/src'],
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },
+  preset: 'ts-jest/presets/js-with-ts',
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  setupFilesAfterEnv: ['./src/setupFrameworks.ts'],
+  transformIgnorePatterns: [`node_modules/(?!${esModules})`],
+  setupFilesAfterEnv: ['./jest.setup.js'],
 };

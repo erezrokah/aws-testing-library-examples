@@ -7,7 +7,7 @@ Examples on how to use [AWS Testing Library](https://github.com/erezrokah/aws-te
 
 ## Prerequisites
 
-[Nodejs](https://nodejs.org/en/) (at least version 14)
+[Nodejs](https://nodejs.org/en/) (at least version 16)
 
 Amazon AWS account and `awscli` installed and configured: <https://aws.amazon.com/getting-started/>
 
