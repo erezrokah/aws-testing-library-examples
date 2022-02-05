@@ -40,7 +40,7 @@
     "git-remote-origin-url": "^4.0.0",
     "jest": "^27.0.0",
     "prettier": "^2.0.0",
-    "serverless": "^2.72.1",
+    "serverless": "^3.0.0",
     "serverless-iam-roles-per-function": "^3.0.0-d84bffd",
     "serverless-plugin-tracing": "^2.0.0",
     "serverless-pseudo-parameters": "^2.5.0",
