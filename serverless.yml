@@ -1,13 +1,11 @@
 service: aws-testing-library-examples
 
 plugins:
-  - serverless-pseudo-parameters
   - serverless-webpack
   - '@anttiviljami/serverless-stack-output'
-  - serverless-plugin-tracing
   - serverless-iam-roles-per-function
   - serverless-step-functions
-  - serverless-s3-remover
+  - serverless-s3-cleaner
 
 custom:
   currentStage: ${opt:stage, env:STAGE, 'dev'}
@@ -27,7 +25,7 @@ custom:
     includeModules: true
     packager: npm
 
-  remover:
+  serverless-s3-cleaner:
     buckets:
       - ${self:custom.s3Bucket}
 
@@ -43,14 +41,8 @@ provider:
   memorySize: 256
   logRetentionInDays: 7
 
-  tracing: true # enable tracing
-  iamRoleStatements:
-    - Effect: 'Allow' # xray permissions (required)
-      Action:
-        - 'xray:PutTraceSegments'
-        - 'xray:PutTelemetryRecords'
-      Resource:
-        - '*'
+  tracing:
+    lambda: true
 
 functions:
   create:
@@ -67,7 +59,7 @@ functions:
           - dynamodb:PutItem
           - dynamodb:UpdateItem
           - dynamodb:DeleteItem
-        Resource: 'arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.dynamoDbTable}'
+        Resource: !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:custom.dynamoDbTable}'
 
   queue:
     handler: src/kinesis.queue
@@ -78,7 +70,7 @@ functions:
       - Effect: Allow
         Action:
           - kinesis:PutRecord
-        Resource: 'arn:aws:kinesis:#{AWS::Region}:#{AWS::AccountId}:stream/${self:custom.kinesisStream}'
+        Resource: !Sub 'arn:aws:kinesis:${AWS::Region}:${AWS::AccountId}:stream/${self:custom.kinesisStream}'
 
   save:
     handler: src/s3.save
