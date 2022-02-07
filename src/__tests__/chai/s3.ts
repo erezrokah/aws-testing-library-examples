@@ -41,11 +41,11 @@ describe('s3', () => {
 
       const parsedResult = JSON.parse(result.body);
       expect(parsedResult.message).to.eq('File saved');
-      const expectedBuffer = await (await fetch(body.file_url)).buffer();
+      const expectedBuffer = await (await fetch(body.file_url)).arrayBuffer();
 
       await expect({ region, bucket, timeout: 0 }).to.have.object(
         body.key,
-        expectedBuffer,
+        Buffer.from(expectedBuffer),
       );
     });
   });

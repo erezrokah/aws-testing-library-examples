@@ -1,5 +1,12 @@
 /* eslint-env node */
-const esModules = ['aws-testing-library', 'filter-obj'].join('|');
+const esModules = [
+  'aws-testing-library',
+  'filter-obj',
+  'node-fetch',
+  'data-uri-to-buffer',
+  'fetch-blob',
+  'formdata-polyfill',
+].join('|');
 
 module.exports = {
   roots: ['<rootDir>/src'],
