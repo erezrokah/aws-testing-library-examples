@@ -3,7 +3,8 @@ Resources:
     Type: AWS::Kinesis::Stream
     Properties:
       Name: ${self:custom.kinesisStream}
-      ShardCount: 1
+      StreamModeDetails:
+        StreamMode: ON_DEMAND
 
 Outputs:
   KinesisStreamName:
