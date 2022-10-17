@@ -60,6 +60,6 @@
   "dependencies": {
     "aws-sdk": "^2.678.0",
     "node-fetch": "^2.6.0",
-    "uuid": "^8.0.0"
+    "uuid": "^9.0.0"
   }
 }
