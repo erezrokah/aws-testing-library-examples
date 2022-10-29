@@ -20,7 +20,7 @@ describe('dynamoDb', () => {
 
       expect.assertions(1);
       await expect({ region, function: log, timeout: 30 * 1000 }).toHaveLog(
-        body.message,
+        `"${body.message}"`,
       );
     });
   });
