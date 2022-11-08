@@ -28,7 +28,7 @@
     "@types/aws-lambda": "^8.10.62",
     "@types/chai": "^4.2.12",
     "@types/jest": "^29.0.0",
-    "@types/node": "^16.0.0",
+    "@types/node": "^18.0.0",
     "@types/node-fetch": "^2.5.7",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
